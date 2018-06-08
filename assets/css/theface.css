@@ -8,9 +8,16 @@ button:active {
 }
 button:focus, input:focus {
   outline: none;
+  border: 1px solid deepskyblue;
 }
 button:hover {
   cursor: pointer;
+}
+input {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: 1px solid lightgrey;
 }
 
 html {
@@ -80,13 +87,6 @@ body {
         padding: 6px;
         font: 14px sans-serif;
         flex: 1;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        border: 1px solid lightgrey;
-      }
-      #filter_input:focus {
-        border: 1px solid deepskyblue;
       }
 
     .code, .country {
@@ -100,3 +100,53 @@ body {
       justify-content: flex-start;
       border-left: 1px solid lightgrey;
     }
+
+#MODAL {
+  background-color: #00000090;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+  #cont_dialog {
+    display: flex;
+    flex: 1;
+    min-height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+    #cont_inputs {
+      background-color: whitesmoke;
+      display: flex;
+      flex-direction: column;
+      padding: 6px;
+      border-radius: 3px;
+      border: 1px solid lightskyblue;
+    }
+    #cont_inputs > * {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      padding: 6px;
+    }
+    #cont_inputs label {
+      /* background-color: blue; */
+      flex: 1;
+    }
+    #cont_inputs input {
+      /* background-color: green; */
+      flex: 2;
+      padding: 6px;
+      justify-self: flex-end;
+      font-size: inherit;
+      border-radius: 3px;
+    }
+  #add {
+    flex: 1;
+    min-width: 100%;
+    min-height: 40px;
+    border: 1px solid lightgray;
+    border-radius: 3px;
+  }

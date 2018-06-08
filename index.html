@@ -8,10 +8,10 @@
   <link rel="stylesheet" href="assets/css/theface.css">
 </head>
 <body>
-  <div id="MODAL">
+  <div id="MODAL" >
     <div id="cont_dialog" onclick="close_modal()">
       <form action="" method="post">
-        <div id="cont_inputs">
+        <div id="cont_inputs" onclick="event.stopPropagation()">
           <div>
             <label for="code">Code:</label>
             <input id="code" type="text" autofocus placeholder="RU">

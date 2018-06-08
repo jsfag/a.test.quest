@@ -91,6 +91,7 @@ function open_modal() {
   MODAL.style.display = 'block'
 }
 function close_modal() {
+  const e = window.event
   document.body.classList.remove('noscroll')
   MODAL.style.display = 'none'
 }
@@ -100,6 +101,7 @@ function addCountry() {
   const country = elemQuery('#country').value
   
   if(code !== '' && country !== '') {
+    console.log('asds')
     const table = elemQuery('#table')
     // 
     Array.from(table.childNodes).forEach(el => el.remove())

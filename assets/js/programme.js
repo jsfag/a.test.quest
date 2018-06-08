@@ -84,3 +84,27 @@ function filteredCountries() {
     processData(filCountries)(addRow)
   }
 }
+
+
+function open_modal() {
+  document.body.classList.add('noscroll')
+  MODAL.style.display = 'block'
+}
+function close_modal() {
+  document.body.classList.remove('noscroll')
+  MODAL.style.display = 'none'
+}
+function addCountry() {
+  const e = window.event
+  const code = elemQuery('#code').value
+  const country = elemQuery('#country').value
+  
+  if(code !== '' && country !== '') {
+    const table = elemQuery('#table')
+    // 
+    Array.from(table.childNodes).forEach(el => el.remove())
+    countries.push({ code, country })
+    processData(sortName(countries))(addRow)
+    close_modal()
+  }
+}

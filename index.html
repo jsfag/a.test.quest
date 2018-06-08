@@ -9,19 +9,20 @@
 </head>
 <body>
   <div id="MODAL">
-    <div id="cont_dialog">
+    <div id="cont_dialog" onclick="close_modal()">
       <form action="" method="post">
         <div id="cont_inputs">
           <div>
-            <label for="Code">Code:</label>
-            <input id="Code" type="text" autofocus>
+            <label for="code">Code:</label>
+            <input id="code" type="text" autofocus placeholder="RU">
           </div>
           <div>
-            <label for="Country">Country:</label>
-            <input id="Country" type="text">
+            <label for="country">Country:</label>
+            <input id="country" type="text" placeholder="Russia">
           </div>
           <div>
-            <button id="add">Add</button>
+            <button type="button" id="add" onclick="addCountry()">Add</button>
+            <button type="button" onclick="close_modal()">Cancel</button>
           </div>
         </div>
       </form>
@@ -29,12 +30,15 @@
   </div>
   <div id="ROOT">
     <div id="head">
-      <div id="filter">
-        <span>Country filter:</span>
+      <div id="cont_controls">
+        <div>
+          <button id="open_modal" onclick="open_modal()">Add</button>
+        </div>
+
         <div>
           <input id="filter_input"
             type="text"
-            placeholder="Type here..."
+            placeholder="Filter..."
             autofocus
             onkeyup="filteredCountries()">
         </div>

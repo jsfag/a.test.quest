@@ -70,23 +70,27 @@ body {
   #table > div:nth-child(even) {
     background-color: cornsilk;
   }
-    #filter {
+    #cont_controls {
       display: flex;
       flex: 1;
-      align-items: center;
       justify-content: center;
       padding: 3px;
     }
-    #filter > * {
+    #cont_controls > * {
       display: flex;
       flex: 1;
       padding: 3px;
       justify-content: center;
+      font: 14px sans-serif;
     }
+      #open_modal {
+        flex: 1;
+        font-size: inherit;
+      }
       #filter_input {
         padding: 6px;
-        font: 14px sans-serif;
         flex: 1;
+        font-size: inherit;
       }
 
     .code, .country {
@@ -101,7 +105,9 @@ body {
       border-left: 1px solid lightgrey;
     }
 
+
 #MODAL {
+  display: none;
   background-color: #00000090;
   position: fixed;
   z-index: 1;
@@ -143,10 +149,24 @@ body {
       font-size: inherit;
       border-radius: 3px;
     }
-  #add {
-    flex: 1;
-    min-width: 100%;
-    min-height: 40px;
-    border: 1px solid lightgray;
-    border-radius: 3px;
-  }
+    #cont_inputs button {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid lightgray;
+    }
+    #cont_inputs button:nth-of-type(1) {
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+      border-right: none;
+    }
+    #cont_inputs button:nth-of-type(2) {
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+    }
+
+
+
+/* Utils */
+.noscroll {
+  overflow: hidden;
+}

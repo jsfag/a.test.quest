@@ -6,50 +6,80 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <link rel="stylesheet" href="assets/css/theface.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
-  <div id="MODAL">
-    <div id="cont_dialog" onclick="close_modal()">
-      <form action="" method="post">
-        <div id="cont_inputs" onclick="event.stopPropagation()">
-          <div>
-            <label for="code">Code:</label>
-            <input id="code" type="text" autofocus placeholder="RU">
-          </div>
-          <div>
-            <label for="country">Country:</label>
-            <input id="country" type="text" placeholder="Russia">
-          </div>
-          <div>
-            <button type="button" id="add" onclick="data.addCountry()">Add</button>
-            <button type="button" onclick="close_modal()">Cancel</button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
   <div id="ROOT">
     <div id="head">
       <div id="cont_controls">
         <div>
-          <button id="open_modal" onclick="open_modal()">Add</button>
+          <button id="open_modal" @click="modalOpen">Add</button>
         </div>
 
         <div>
           <input id="filter_input"
-            type="text"
+            v-model="filterText"
             placeholder="Filter..."
-            autofocus
-            onkeyup="data.filtData()">
+            autofocus>
         </div>
       </div>
       <div id="sort">
-        <button onclick="data.sortCode()">Code</button>
-        <button onclick="data.sortCountry()">Country</button>
+        <button @click="sortCode()">Code</button>
+        <button @click="sortCountry()">Country</button>
       </div>
     </div>
-    <div id="table"></div>
+    <div id="table">
+      <div v-for="entry in filteredData">
+        <div class="code">
+          {{ entry.code }}
+        </div>
+        <div class="country">
+          {{ entry.country }}
+        </div>
+      </div>
+    </div>
+
+    <modal v-if="showModal" @close="modalClose" @add="addCountry">
+      <div slot="code">
+        <label for="code">Code:</label>
+        <input
+          v-model="modal.code"
+          id="code"
+          type="text"
+          placeholder="RU"
+          autofocus>
+      </div>
+      <div slot="country">
+        <label for="country">Country:</label>
+        <input
+          v-model="modal.country"
+          id="country"
+          type="text"
+          placeholder="Russia">
+      </div>
+    </modal>
   </div>
+
 </body>
+<script type="text/x-template" id="modal-template">
+  <transition name="modal">
+    <div id="MODAL">
+      <div id="cont_dialog" @click="$emit('close')">
+        <form action="" method="post">
+          <div id="cont_inputs" @click.stop>
+            <slot name="code">
+            </slot>
+            <slot name="country">
+            </slot>
+            <div>
+              <button type="button" id="add" @click="$emit('add')">Add</button>
+              <button type="button" @click="$emit('close')">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </transition>
+</script>
 <script src="assets/js/programme.js"></script>
 </html>

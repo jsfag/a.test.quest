@@ -107,14 +107,15 @@ body {
 
 
 #MODAL {
-  display: none;
+  /* display: none; */
   background-color: #00000090;
   position: fixed;
-  z-index: 1;
+  z-index: 10;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  transition: opacity .3s ease;
 }
   #cont_dialog {
     display: flex;
@@ -168,4 +169,19 @@ body {
 /* Utils */
 .noscroll {
   overflow: hidden;
+}
+
+/* Auto Vue */
+.modal-enter {
+  opacity: 0;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
 }

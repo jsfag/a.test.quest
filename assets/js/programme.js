@@ -27,7 +27,7 @@ const data = new Vue({
         
         const countries = Object.entries(data)
           .map(([a, b]) => ({ code: a, country: b }))
-
+        
         this.countries.push(...countries)
         this.sortCountry()
       }catch(err) {
@@ -47,14 +47,19 @@ const data = new Vue({
       this.showModal = false
     },
     addCountry() {
-      if(this.modal.code && this.modal.country) {
-        this.countries.push({
-          code: this.modal.code,
-          country: this.modal.country
-        })
-        this.sortCountry()
-        this.modalClose()
-      }
+      if(!this.modal.code && !this.modal.country) return
+
+      const row = new Object({
+        code: this.modal.code,
+        country: this.modal.country
+      })
+
+      this.countries.push(row)
+      this.modal.code = ''
+      this.modal.country = ''
+
+      this.sortCountry()
+      this.modalClose()
     }
   },
   computed: {

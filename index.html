@@ -17,8 +17,9 @@
         </div>
 
         <div>
-          <input id="filter_input"
+          <input
             v-model="filterText"
+            id="filter_input"
             placeholder="Filter..."
             autofocus>
         </div>
@@ -69,10 +70,12 @@
           <div id="cont_inputs" @click.stop>
             <slot name="code">
             </slot>
+
             <slot name="country">
             </slot>
+            
             <div>
-              <button type="button" id="add" @click="$emit('add')">Add</button>
+              <button type="button" @click="$emit('add')">Add</button>
               <button type="button" @click="$emit('close')">Cancel</button>
             </div>
           </div>

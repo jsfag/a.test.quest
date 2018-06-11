@@ -11,7 +11,7 @@
   <div id="MODAL">
     <div id="cont_dialog" onclick="close_modal()">
       <form action="" method="post">
-        <div id="cont_inputs">
+        <div id="cont_inputs" onclick="event.stopPropagation()">
           <div>
             <label for="code">Code:</label>
             <input id="code" type="text" autofocus placeholder="RU">
@@ -21,7 +21,7 @@
             <input id="country" type="text" placeholder="Russia">
           </div>
           <div>
-            <button type="button" id="add" onclick="addCountry()">Add</button>
+            <button type="button" id="add" onclick="data.addCountry()">Add</button>
             <button type="button" onclick="close_modal()">Cancel</button>
           </div>
         </div>
@@ -40,12 +40,12 @@
             type="text"
             placeholder="Filter..."
             autofocus
-            onkeyup="filteredCountries()">
+            onkeyup="data.filtData()">
         </div>
       </div>
       <div id="sort">
-        <button onclick="sortHandler(sortCode)">Code</button>
-        <button onclick="sortHandler(sortName)">Country</button>
+        <button onclick="data.sortCode()">Code</button>
+        <button onclick="data.sortCountry()">Country</button>
       </div>
     </div>
     <div id="table"></div>

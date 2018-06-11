@@ -3,88 +3,100 @@
 const elemQuery = selector => document.querySelector(selector)
 const elemMake = tagName => document.createElement(tagName)
 const textMake = text => document.createTextNode(text)
-// const elemAppend = (root, child) => root.appendChild(child)
 const addClass = (el, name) => el.classList.add(name)
 
-function addRow(cityCode = '', countryName = '') {
-  const root = elemQuery('#table')
-  const row = makeRow(cityCode, countryName)
-  root.appendChild(row)
-}
+class Countries {
+  constructor(url = 'assets/data/data.json') {
+    this.url = url
+    this.data = []
+    this.dataCache = []
 
-function makeRow(cityCode, countryName) {
-  const row = elemMake('div')
-  
-  const colCode = elemMake('div')
-  const colName = elemMake('div')
+    this.table = elemQuery('#table')
+    this.rows = []
+    this.filter = ''
+    this.getData()
+  }
 
-  const nodeCode = textMake(cityCode)
-  const nodeName = textMake(countryName)
+  async getData() {
+    try {
+      const dataRow = await fetch(this.url)
+      const data = await dataRow.json()
+      
+      const countries = Object.entries(data)
+        .map(([a, b]) => ({ code: a, country: b }))
 
-  colCode.appendChild(nodeCode)
-  colName.appendChild(nodeName)
-
-  addClass(colCode, 'code')
-  addClass(colName, 'country')
-
-  row.appendChild(colCode)
-  row.appendChild(colName)
-
-  return row
-}
-
-// addRow('RU', 'Russia')
-
-const countries = []
-window.onload = init()
-
-async function init() {
-  try {
-    const dataRow = await fetch('assets/data/data.json')
-    const data = await dataRow.json()
-    // 
-    for(const item in data) {
-      countries.push({
-        code: item,
-        country: data[item]
-      })
+      this.dataCache.push(...countries)
+      this.data = this.dataCache
+      this.sortCountry()
+      this.renderData()
+    }catch(err) {
+      throw new Error(err)
     }
-    processData(sortName(countries))(addRow)
-  }catch(err) {
-    throw new Error(err)
   }
-}
 
-const processData = data => fn => data.forEach((item, i) => fn(item.code, item.country, i))
-
-function replaceTable(code, country, i) {
-  const table = elemQuery('#table')
+  makeRow(code, country) {
+    const row = elemMake('div')
   
-  if(!table.childNodes[i]) return
-
-  const row = makeRow(code, country)
-  table.replaceChild(row, table.childNodes[i])
-}
-
-const sortCode = arr => arr.sort((a, b) => a.code > b.code ? 1 : -1)
-const sortName = arr => arr.sort((a, b) => a.country > b.country ? 1 : -1)
-
-const sortHandler = fn => processData(fn(countries))(replaceTable)
-
-function filteredCountries() {
-  const e = window.event
-  const input = e.target
-  const filter = new RegExp(input.value, 'i')
-  const table = elemQuery('#table')
+    const colCode = elemMake('div')
+    const colName = elemMake('div')
   
-  if(input.value) {
-    // 
+    const nodeCode = textMake(code)
+    const nodeName = textMake(country)
+  
+    colCode.appendChild(nodeCode)
+    colName.appendChild(nodeName)
+  
+    addClass(colCode, 'code')
+    addClass(colName, 'country')
+  
+    row.appendChild(colCode)
+    row.appendChild(colName)
+  
+    this.rows.push(row)
+  }
+
+  // FETCH -> DATA -> FILTER -> SORT -> RENDER
+
+  renderData(data = this.dataCache) {
+    this.rows = []
+    data
+      .filter(({ country }) => country.match(this.filter))
+      .forEach(({ code, country }) => this.makeRow(code, country))
+    
     Array.from(table.childNodes).forEach(el => el.remove())
-    const filCountries = countries.filter(({ country }) => country.match(filter))
-    processData(filCountries)(addRow)
+    // 
+    this.rows.forEach(row => table.appendChild(row))
+  }
+
+  filtData() {
+    const e = window.event
+    const input = e.target
+
+    this.filter = new RegExp(input.value, 'i')
+    this.renderData(this.data)
+  }
+
+  sortCode() {
+    this.data.sort((a, b) => a.code > b.code ? 1 : -1)
+    this.renderData(this.data)
+  }
+  sortCountry() {
+    this.data.sort((a, b) => a.country > b.country ? 1 : -1)
+    this.renderData(this.data)
+  }
+  
+  addCountry() {
+    const e = window.event
+    const code = elemQuery('#code').value
+    const country = elemQuery('#country').value
+    
+    if(code !== '' && country !== '') {
+      this.data.push({ code, country })
+      this.renderData(this.data)
+      close_modal()
+    }
   }
 }
-
 
 function open_modal() {
   document.body.classList.add('noscroll')
@@ -94,17 +106,5 @@ function close_modal() {
   document.body.classList.remove('noscroll')
   MODAL.style.display = 'none'
 }
-function addCountry() {
-  const e = window.event
-  const code = elemQuery('#code').value
-  const country = elemQuery('#country').value
-  
-  if(code !== '' && country !== '') {
-    const table = elemQuery('#table')
-    // 
-    Array.from(table.childNodes).forEach(el => el.remove())
-    countries.push({ code, country })
-    processData(sortName(countries))(addRow)
-    close_modal()
-  }
-}
+
+const data = new Countries()

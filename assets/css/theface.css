@@ -1,7 +1,7 @@
 button {
   flex: 1;
   font-size: inherit;
-  border: none;
+  border: 1px solid lightgray;
 }
 button:active {
   background-color: antiquewhite;
@@ -152,7 +152,6 @@ body {
     #cont_inputs button {
       flex: 1;
       padding: 8px;
-      border: 1px solid lightgray;
     }
     #cont_inputs button:nth-of-type(1) {
       border-top-left-radius: 3px;

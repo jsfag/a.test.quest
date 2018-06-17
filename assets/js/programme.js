@@ -47,7 +47,7 @@ const data = new Vue({
       this.showModal = false
     },
     addCountry() {
-      if(!this.modal.code && !this.modal.country) return
+      if(!this.modal.code || !this.modal.country) return
 
       const row = new Object({
         code: this.modal.code,

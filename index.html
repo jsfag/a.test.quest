@@ -18,7 +18,7 @@
 
         <div>
           <input
-            v-model="filterText"
+            v-model.trim="filterText"
             id="filter_input"
             placeholder="Filter..."
             autofocus>
@@ -44,7 +44,7 @@
       <div slot="code">
         <label for="code">Code:</label>
         <input
-          v-model="modal.code"
+          v-model.trim="modal.code"
           id="code"
           type="text"
           placeholder="RU"
@@ -53,7 +53,7 @@
       <div slot="country">
         <label for="country">Country:</label>
         <input
-          v-model="modal.country"
+          v-model.trim="modal.country"
           id="country"
           type="text"
           placeholder="Russia">

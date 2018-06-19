@@ -30,12 +30,12 @@
       </div>
     </div>
     <div id="table">
-      <div v-for="entry in filteredData">
+      <div v-for="entry in filteredData" :key="entry.code">
         <div class="code">
-          {{ entry.code }}
+          {{entry.code}}
         </div>
         <div class="country">
-          {{ entry.country }}
+          {{entry.country}}
         </div>
       </div>
     </div>
@@ -48,7 +48,7 @@
           id="code"
           type="text"
           placeholder="RU"
-          autofocus>
+          v-focus>
       </div>
       <div slot="country">
         <label for="country">Country:</label>

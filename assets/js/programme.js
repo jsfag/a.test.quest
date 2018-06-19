@@ -28,7 +28,7 @@ const data = new Vue({
         const countries = Object.entries(data)
           .map(([a, b]) => ({ code: a, country: b }))
         
-        this.countries.push(...countries)
+        this.countries.push(...new Set(countries)) // Set -> store unique values.
         this.sortCountry()
       }catch(err) {
         throw new Error(err)
@@ -47,8 +47,9 @@ const data = new Vue({
       this.showModal = false
     },
     addCountry() {
-      if(!this.modal.code || !this.modal.country) return
-
+      const { code, country } = this.modal
+      if(!code || !country || this.isEqual(code)) return
+      
       const row = new Object({
         code: this.modal.code,
         country: this.modal.country
@@ -60,12 +61,22 @@ const data = new Vue({
 
       this.sortCountry()
       this.modalClose()
+    },
+    isEqual(code) {
+      return this.countries.some(({ code: Code }) => code === Code)
     }
   },
   computed: {
     filteredData() {
       const filter = new RegExp(this.filterText, 'i')
       return this.countries.filter(({ country }) => country.match(filter))
+    }
+  },
+  directives: {
+    focus: {
+      inserted: function(el) {
+        el.focus();
+      }
     }
   }
 })
